@@ -1,6 +1,7 @@
 import axios from 'axios'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded' //设置请求头
-axios.defaults.baseURL ='http://note-server.hunger-valley.com'
+axios.defaults.baseURL ='https://note-server.hunger-valley.com/'
+axios.defaults.withCredentials =true //是否跨域
 
 
 export default function request (url,type='Get',data={}){
