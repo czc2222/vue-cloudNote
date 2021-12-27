@@ -78,11 +78,13 @@ export default {
         this.register.notice = result2.notice
         return
       }
-      this.register.isError = false
-      this.register.notice = '注册成功'
-      console.log('账户:' + this.register.username, '密码:' + this.register.password)
       auth.register({username:this.register.username,password:this.register.password}).then(data=>{
-        console.log(data);
+        this.register.isError = false
+        this.register.notice =''
+        this.$router.push({path:'notebooks'})
+      }).catch(data =>{
+        this.register.isError =true
+        this.register.notice = data.msg
       })
     },
     onLogin() {
@@ -98,11 +100,13 @@ export default {
         this.login.notice = result2.notice
         return
       }
-      this.login.isError = false
-      this.login.notice = '登入成功'
-      console.log('开始登入:账户:' + this.login.username, '密码:' + this.login.password)
       auth.login({username:this.login.username,password:this.login.password}).then(data=>{
-        console.log(data);
+        this.login.isError = false
+        this.login.notice =''
+        this.$router.push({path:'notebooks'})
+      }).catch(data =>{
+        this.login.isError =true
+        this.login.notice = data.msg
       })
     },
     validUsername(username) {
