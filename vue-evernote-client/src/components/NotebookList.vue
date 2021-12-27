@@ -1,7 +1,7 @@
 <template>
   <div class="detail" id="notebook-list">
     <header>
-      <a href="#" class="btn" @click="onCreate"><i class="iconfont icon-plus"></i> 新建笔记本</a>
+      <a href="#" class="btn" @click="onCreate"><i class="iconfont icon-plus"></i> <span>新建笔记本</span></a>
     </header>
     <main>
       <div class="layout">
@@ -14,7 +14,7 @@
               <span>{{notebook.noteCounts}}</span>
               <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
               <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
-              <span class="date">{{notebook.createdAt}}</span>
+              <span class="date">{{notebook.friendlyCreatedAt}}</span>
             </div>
           </router-link>
         </div>
@@ -28,6 +28,7 @@
 <script>
 import auth from "../apis/auth";
 import Notebooks from "../apis/notebooks";
+import {friendlyDate} from '@/helpers/util'
 window.Notebooks = Notebooks
 
 export default {
@@ -73,8 +74,7 @@ export default {
         alert('笔记本名称不能为空')
       }else {
         Notebooks.addNotebook({title}).then(res=>{
-          console.log(res.data);
-
+          res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt)
           this.notebooks.unshift(res.data)
           alert(res.msg)
         })
