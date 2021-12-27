@@ -8,7 +8,14 @@ const URL = {
 
 export default {
   getAll() {
-    return request(URL.GET)
+    return new Promise((resolve,reject)=>{
+      request(URL.GET).then(res=>{
+        res.data = res.data.sort((notebook1,notebook2)=> notebook1.createdAt < notebook2.createdAt ? 1:-1)
+        resolve(res)
+      }).catch(err=>{
+        reject(err)
+      })
+    })
     // return new Promise((resolve, reject) => {
     //   request(URL.GET)
     //     .then(res => {
