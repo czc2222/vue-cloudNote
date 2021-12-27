@@ -7,15 +7,23 @@
         <router-link to="/trash/2" title="回收站"><i class="iconfont icon-trash"></i></router-link>
       </div>
       <div class="logout">
-        <i class="iconfont icon-logout"></i>
+        <i class="iconfont icon-logout" @click="logout"></i>
       </div>
     </div>
   </template>
 
 <script>
   import Avatar from "./Avatar";
+  import request from "../helpers/request";
   export default {
-    components: {Avatar}
+    components: {Avatar},
+    methods:{
+      logout(){
+        request('/auth/logout').then(data=>{
+          console.log(data);
+        })
+      }
+    }
   }
 
 </script>
