@@ -154,6 +154,7 @@ export default {
 
   .main {
     flex: 1;
+
     background: url(~@/assets/cloudNote.png) center center no-repeat;
 
   }
