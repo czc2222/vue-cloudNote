@@ -32,8 +32,8 @@
   </div>
 </template>
 <script>
-import request from "../helpers/request";
-request('/auth').then(data=>{
+import auth from "../apis/auth";
+auth.getInfo().then(data=>{
   console.log(data);
 })
 export default {
@@ -81,7 +81,7 @@ export default {
       this.register.isError = false
       this.register.notice = '注册成功'
       console.log('账户:' + this.register.username, '密码:' + this.register.password)
-      request('/auth/register','POST',{username:this.register.username,password:this.register.password}).then(data=> {
+      auth.register({username:this.register.username,password:this.register.password}).then(data=>{
         console.log(data);
       })
     },
@@ -101,7 +101,7 @@ export default {
       this.login.isError = false
       this.login.notice = '登入成功'
       console.log('开始登入:账户:' + this.login.username, '密码:' + this.login.password)
-      request('/auth/login','POST',{username:this.login.username,password:this.login.password}).then(data=>{
+      auth.login({username:this.login.username,password:this.login.password}).then(data=>{
         console.log(data);
       })
     },
