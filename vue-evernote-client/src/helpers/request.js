@@ -1,14 +1,12 @@
 import axios from 'axios'
 import baseURLConfig from './config-baseURL'
 
-console.log(baseURLConfig);
-
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded' //设置请求头
 axios.defaults.baseURL =baseURLConfig.baseURL
 axios.defaults.withCredentials =true //是否跨域
 
 
-export default function request (url,type='Get',data={}){
+export default function request (url,type='GET',data={}){
   return new Promise((resolve,reject)=>{
     let options={
       url,

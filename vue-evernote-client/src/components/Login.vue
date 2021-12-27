@@ -76,11 +76,12 @@ export default {
         this.register.notice = result2.notice
         return
       }
-      auth.register({username:this.register.username,password:this.register.password}).then(data=>{
+      auth.register({username:this.register.username,password:this.register.password})
+        .then(data=>{
         this.register.isError = false
         this.register.notice =''
         Bus.$emit('userInfo',{username:this.login.username})
-        this.$router.push({path:'notebooks'})
+        this.$router.push({path:'/notebooks'})
       }).catch(data =>{
         this.register.isError =true
         this.register.notice = data.msg
@@ -99,7 +100,8 @@ export default {
         this.login.notice = result2.notice
         return
       }
-      auth.login({username:this.login.username,password:this.login.password}).then(data=>{
+      auth.login({username:this.login.username,password:this.login.password})
+        .then(data=>{
         this.login.isError = false
         this.login.notice =''
         Bus.$emit('userInfo',{username:this.login.username})
