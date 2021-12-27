@@ -1,19 +1,30 @@
 <template>
-   <span :title="user.username">{{slug}}</span>
+   <span :title="username">{{slug}}</span>
   </template>
 
 <script>
 
+import auth from "../apis/auth";
+
 export default {
    data() {
        return {
-            user: {
-              username: 'hunger'
-           },
-         slug: 'H'
+         username: '未登入',
        }
+     },
+  computed:{
+     slug(){
+       return this.username[0]
      }
+  },
+  created() {
+     auth.getInfo().then(res=>{
+       if(res.isLogin){
+         this.username =res.data.username
+       }
+     })
   }
+}
 </script>
 
 <style scoped>

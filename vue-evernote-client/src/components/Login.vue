@@ -33,9 +33,6 @@
 </template>
 <script>
 import auth from "../apis/auth";
-auth.getInfo().then(data=>{
-  console.log(data);
-})
 export default {
   data() {
     return {
