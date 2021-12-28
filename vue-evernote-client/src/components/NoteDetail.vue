@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 h1 {
   color: blue;
 }

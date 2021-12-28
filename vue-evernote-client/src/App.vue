@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 @import '//at.alicdn.com/t/font_496303_kqrjhri8l25d0a4i.css';
 * {
   box-sizing: border-box;
@@ -48,8 +48,8 @@ ul, li{
 .btn {
   color: #666;
   font-size: 12px;
-  padding: 2px 4px;+  background-color: #fff;
-  box-shadow: 0px 0px 2px 0px #ccc;
+  padding: 2px 4px; background-color: #fff;
+  box-shadow: 0 0 2px 0 #ccc;
   border: none;
   cursor: pointer;
   display: inline-block;

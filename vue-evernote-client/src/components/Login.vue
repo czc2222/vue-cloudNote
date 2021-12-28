@@ -1,6 +1,5 @@
 <template>
   <div id="login">
-
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
@@ -34,6 +33,7 @@
 <script>
 import auth from "../apis/auth";
 import Bus from "../helpers/bus";
+
 export default {
   data() {
     return {
@@ -76,14 +76,14 @@ export default {
         this.register.notice = result2.notice
         return
       }
-      auth.register({username:this.register.username,password:this.register.password})
-        .then(data=>{
-        this.register.isError = false
-        this.register.notice =''
-        Bus.$emit('userInfo',{username:this.login.username})
-        this.$router.push({path:'/notebooks'})
-      }).catch(data =>{
-        this.register.isError =true
+      auth.register({username: this.register.username, password: this.register.password})
+        .then(data => {
+          this.register.isError = false
+          this.register.notice = ''
+          Bus.$emit('userInfo', {username: this.login.username})
+          this.$router.push({path: '/notebooks'})
+        }).catch(data => {
+        this.register.isError = true
         this.register.notice = data.msg
       })
     },
@@ -100,14 +100,14 @@ export default {
         this.login.notice = result2.notice
         return
       }
-      auth.login({username:this.login.username,password:this.login.password})
-        .then(data=>{
-        this.login.isError = false
-        this.login.notice =''
-        Bus.$emit('userInfo',{username:this.login.username})
-        this.$router.push({path:'notebooks'})
-      }).catch(data =>{
-        this.login.isError =true
+      auth.login({username: this.login.username, password: this.login.password})
+        .then(data => {
+          this.login.isError = false
+          this.login.notice = ''
+          Bus.$emit('userInfo', {username: this.login.username})
+          this.$router.push({path: 'notebooks'})
+        }).catch(data => {
+        this.login.isError = true
         this.login.notice = data.msg
       })
     },
@@ -150,7 +150,7 @@ export default {
 .modal-container {
   width: 800px;
   height: 500px;
-  margin: 0px auto;
+  margin: 0 auto;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
@@ -161,7 +161,7 @@ export default {
   .main {
     flex: 1;
 
-    background: url(~@/assets/cloudNote.png) center center no-repeat;
+    background: url(../assets/cloudNote.png) center center no-repeat;
 
   }
 
@@ -201,6 +201,7 @@ export default {
       height: 0;
       overflow: hidden;
       transition: height .4s;
+
       &.show {
         height: 193px;
       }
