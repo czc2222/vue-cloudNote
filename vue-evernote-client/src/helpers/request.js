@@ -1,9 +1,11 @@
 import axios from 'axios'
 import baseURLConfig from './config-baseURL'
+import {Message} from "element-ui";
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded' //设置请求头
 axios.defaults.baseURL =baseURLConfig.baseURL
 axios.defaults.withCredentials =true //是否跨域
+
 
 
 export default function request (url,type='GET',data={}){
@@ -24,12 +26,17 @@ export default function request (url,type='GET',data={}){
       if(res.status === 200){
         resolve(res.data)
       }else {
-        console.log(res.data);
+        Message({
+          type: 'error',
+          message: res.data.msg
+        });
         reject(res.data)
-
       }
     }).catch(err=>{
-      console.log({msg:'网络异常'})
+      Message({
+        type: 'error',
+        message: '网络异常'
+      });
      reject({msg:'网络异常'})
 
 
