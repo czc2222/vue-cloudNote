@@ -41,6 +41,7 @@ export default {
       }).then(res=>{
         this.notes = res.data
         this.$emit('update:value',this.notes)
+        Bus.$emit('update:value',this.notes)
     })
   },
 

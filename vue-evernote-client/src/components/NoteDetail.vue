@@ -25,7 +25,7 @@
 <script>
 import auth from "../apis/auth";
 import NoteSidebar from "./NoteSidebar";
-
+import Bus from '@/helpers/bus'
 export default {
   data () {
     return {
@@ -41,6 +41,9 @@ export default {
       if(!res.isLogin){
         this.$router.push({path:'/login'})
       }
+    })
+    Bus.$on('update:value',val =>{
+      this.currentNote =val.find(note => note.id == this.$route.query.noteId) ||{}
     })
   },
   beforeRouteUpdate (to, from, next) {
