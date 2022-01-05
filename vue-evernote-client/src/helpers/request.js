@@ -33,11 +33,8 @@ export default function request (url,type='GET',data={}){
         reject(res.data)
       }
     }).catch(err=>{
-      Message({
-        type: 'error',
-        message: '网络异常'
-      });
-     reject({msg:'网络异常'})
+      Message.error('网络异常')
+      reject({ msg: '网络异常' })
 
 
     })
