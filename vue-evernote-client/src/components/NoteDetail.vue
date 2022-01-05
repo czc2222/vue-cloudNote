@@ -9,7 +9,7 @@
           <span> 更新日期: {{currentNote.updatedAtFriendly}}</span>
           <span> {{statusText}}</span>
           <span class="iconfont icon-delete" @click="deleteNote"></span>
-          <span class="iconfont icon-fullscreen"></span>
+          <span class="iconfont icon-fullscreen" @click="isShowPreview =!isShowPreview"></span>
         </div>
         <div class="note-title">
           <input type="text"
@@ -18,12 +18,12 @@
                  @keydown="statusText = '正在输入...'">
         </div>
         <div class="editor">
-          <textarea v-show="true"
+          <textarea v-show="!isShowPreview"
                     v-model:value="currentNote.content"
                     placeholder="输入内容, 支持 markdown 语法"
                     @input="updateNote"
                     @keydown="statusText = '正在输入...'">></textarea>
-          <div class="preview markdown-body" v-html="" v-show="false">
+          <div class="preview markdown-body" v-html="previewContent" v-show="isShowPreview">
           </div>
         </div>
       </div>
@@ -39,12 +39,17 @@ import NoteSidebar from "./NoteSidebar";
 import Bus from '@/helpers/bus'
 import _ from 'lodash'
 import Note from '@/apis/notes.js'
+
+import MarkdownIt from 'markdown-it'
+const md = new MarkdownIt();
+
 export default {
   data () {
     return {
       currentNote: {},
       notes:[],
-      statusText:'笔记未改动'
+      statusText:'笔记未改动',
+      isShowPreview:false,
     }
   },
   components:{
@@ -59,6 +64,11 @@ export default {
     Bus.$on('update:value',val =>{
       this.currentNote =val.find(note => note.id == this.$route.query.noteId) ||{}
     })
+  },
+  computed:{
+    previewContent(){
+      return md.render(this.currentNote.content || '')
+    }
   },
   methods:{
     updateNote:_.debounce(function (){//lodash.debounce 节流
