@@ -11,7 +11,7 @@ const getters = {
   currentNote:state =>{
     if(!Array.isArray(state.notes)) return {}
     if(!state.currentNoteId) return  state.notes[0] || {}
-    return  state.notes.find(note => note.id.toString() === state.currentNoteId) || {}
+    return  state.notes.find(note => note.id == state.currentNoteId) || {}
   }
 }
 const mutations ={

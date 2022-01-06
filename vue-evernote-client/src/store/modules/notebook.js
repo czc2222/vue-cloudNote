@@ -10,7 +10,7 @@ const getters ={
   currentNotebook:state =>{
     if(!Array.isArray(state.notebooks)) return {}
     if(!state.currentNotebookId) return  state.notebooks[0] || {}
-    return  state.notebooks.find(notebook => notebook.id.toString() === state.currentNotebookId) || {}
+    return  state.notebooks.find(notebook => notebook.id == state.currentNotebookId) || {}
   }
 }
 const mutations ={
