@@ -26,30 +26,21 @@
 </template>
 
 <script>
-import Notebooks from '@/apis/notebooks'
-import Notes from '@/apis/notes'
-import Bus from '@/helpers/bus'
+
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 
 export default {
   created() {
     this.getNotebooks().then(()=>{
       this.setCurrentNotebook({currentNotebookId:this.$route.query.notebookId})
-      return this.getNotes({notebookId:this.currentNotebook.id})
+      if(this.currentNotebook.id){
+        return this.getNotes({notebookId:this.currentNotebook.id})
+      }
+
     }).then(()=>{
       this.setCurrentNote({currentNoteId:this.$route.query.noteId})
     })
-    // Notebooks.getAll()
-    //   .then(res => {
-    //     this.notebooks = res.data
-    //     this.currentNotebook = this.notebooks.find(notebook => notebook.id == this.$route.query.notebookId)
-    //       || this.notebooks[0] || {}
-    //     return Notes.getAll({notebookId:this.currentNotebook.id})
-    //   }).then(res=>{
-    //     this.notes = res.data
-    //     this.$emit('update:value',this.notes)
-    //     Bus.$emit('update:value',this.notes)
-    // })
+
   },
 
   data() {
@@ -69,23 +60,14 @@ export default {
        return  this.$router.push({path:'/trash'})
       }
       this.setCurrentNotebook({currentNotebookId:notebookId})
-      // this.$store.commit('setCurrentNotebook', {currentNotebookId:notebookId})
+
       this.getNotes({notebookId})
-      // this.currentNotebook = this.notebooks.find(notebook => notebook.id == notebookId)
-      // Notes.getAll({ notebookId })
-      //   .then(res => {
-      //     this.notes = res.data
-      //     this.$emit('update:value',this.notes)
-      //   })
+
     },
 
     onAddNote() {
       this.addNote({notebookId:this.currentNotebook.id })
-      // Notes.addNote({ notebookId: this.currentNotebook.id })
-      //   .then(res => {
-      //     console.log(res)
-      //     this.notes.unshift(res.data)
-      //   })
+
     }
 
   }

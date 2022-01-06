@@ -34,16 +34,11 @@
 </template>
 
 <script>
-import auth from "../apis/auth";
 import NoteSidebar from "./NoteSidebar";
-import Bus from '@/helpers/bus'
 import _ from 'lodash'
-import Note from '@/apis/notes.js'
 import {mapGetters,mapActions,mapMutations} from 'vuex'
-
 import MarkdownIt from 'markdown-it'
 const md = new MarkdownIt();
-
 export default {
   data () {
     return {
@@ -55,14 +50,9 @@ export default {
     NoteSidebar
   },
   created() {
-    auth.getInfo().then(res=>{
-      if(!res.isLogin){
-        this.$router.push({path:'/login'})
-      }
-    })
-    // Bus.$on('update:value',val =>{
-    //   this.currentNote =val.find(note => note.id == this.$route.query.noteId) ||{}
-    // })
+    this.checkLogin({path:'/login'})
+
+
   },
   computed:{
     ...mapGetters(['currentNote','notes']),
@@ -72,7 +62,7 @@ export default {
   },
   methods:{
     ...mapMutations(['setCurrentNote']),
-    ...mapActions(['updateNote','deleteNote']),
+    ...mapActions(['updateNote','deleteNote','checkLogin']),
     onUpdateNote:_.debounce(function (){//lodash.debounce 节流
       this.updateNote({noteId:this.currentNote.id,title:this.currentNote.title,content:this.currentNote.content})
         .then(data=>{
@@ -89,7 +79,6 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     this.setCurrentNote({currentNoteId:to.query.noteId})
-    // this.currentNote = this.notes.find(note => note.id == to.query.noteId) || {}
     next()
   }
 }

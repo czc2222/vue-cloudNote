@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import auth from "../apis/auth";
+
 
 
 import {mapActions,mapGetters} from 'vuex'
@@ -37,19 +37,16 @@ export default {
     }
   },
   created() {
-    auth.getInfo().then(res => {
-      if (!res.isLogin) {
-        this.$router.push({path: '/login'})
-      }
-    })
-    this.$store.dispatch('getNotebooks')
+    this.checkLogin({path: '/login'})
+
+    this.getNotebooks()
 
   },
   computed:{
     ...mapGetters(['notebooks'])
   },
   methods: {
-    ...mapActions(['getNotebooks','addNotebook','updateNotebook','deleteNotebook']),
+    ...mapActions(['getNotebooks','addNotebook','updateNotebook','deleteNotebook','checkLogin']),
     onEdit(notebook) {
 
       this.$prompt('请输入新笔记本的标题', '修改标题', {
