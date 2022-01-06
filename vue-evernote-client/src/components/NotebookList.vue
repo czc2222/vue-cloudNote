@@ -27,15 +27,13 @@
 
 <script>
 import auth from "../apis/auth";
-import Notebooks from "../apis/notebooks";
-import {friendlyDate} from '@/helpers/util'
 
-window.Notebooks = Notebooks
+
+import {mapActions,mapGetters} from 'vuex'
 
 export default {
   data() {
     return {
-      notebooks: []
     }
   },
   created() {
@@ -44,13 +42,16 @@ export default {
         this.$router.push({path: '/login'})
       }
     })
-    Notebooks.getAll().then(res => {
-      this.notebooks = res.data
-    })
+    this.$store.dispatch('getNotebooks')
+
+  },
+  computed:{
+    ...mapGetters(['notebooks'])
   },
   methods: {
+    ...mapActions(['getNotebooks','addNotebook','updateNotebook','deleteNotebook']),
     onEdit(notebook) {
-      let title
+
       this.$prompt('请输入新笔记本的标题', '修改标题', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -58,20 +59,10 @@ export default {
         inputValue:notebook.title,
         inputErrorMessage: '标题不能为空，且不超过30个字符'
       }).then(({value}) => {
-        title = value
-        return Notebooks.updateNotebook(notebook.id, {title})
-      }).then(res => {
-        notebook.title = title
-        this.$message({
-          type: 'success',
-          message: res.msg
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '放弃修改'
-        });
+        this.updateNotebook({notebookId:notebook.id,title:value})
+
       })
+
     },
     onDelete(notebook) {
       this.$confirm('确认要删除笔记本吗', '删除笔记本', {
@@ -79,19 +70,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        return Notebooks.deleteNotebook(notebook.id)
-      }).then(res => {
-        this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
-        this.$message({
-          type: 'success',
-          message: res.msg
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消删除'
-        });
-      });
+        this.deleteNotebook({notebookId:notebook.id})
+
+      })
+
 
     },
     onCreate() {
@@ -101,20 +83,9 @@ export default {
         inputPattern: /^.{1,30}$/,
         inputErrorMessage: '标题不能为空，且不超过30个字符'
       }).then(({value}) => {
-        return Notebooks.addNotebook({title: value})
-      }).then(res => {
-        res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt)
-        this.notebooks.unshift(res.data)
-        this.$message({
-          type: 'success',
-          message: res.msg
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });
+        this.addNotebook({title:value})
       })
+
 
     }
   }
