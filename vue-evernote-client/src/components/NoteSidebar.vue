@@ -1,6 +1,6 @@
 <template>
   <div class="note-sidebar">
-    <span class="btn add-note" @click="addNote" >添加笔记</span>
+    <span class="btn add-note" @click="onAddNote" >添加笔记</span>
     <el-dropdown class="notebook-title"  @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
         {{currentNotebook.title}} <i class="iconfont icon-down"></i>
@@ -29,49 +29,59 @@
 import Notebooks from '@/apis/notebooks'
 import Notes from '@/apis/notes'
 import Bus from '@/helpers/bus'
+import {mapGetters,mapActions} from 'vuex'
 
 export default {
   created() {
-    Notebooks.getAll()
-      .then(res => {
-        this.notebooks = res.data
-        this.currentNotebook = this.notebooks.find(notebook => notebook.id == this.$route.query.notebookId)
-          || this.notebooks[0] || {}
-        return Notes.getAll({notebookId:this.currentNotebook.id})
-      }).then(res=>{
-        this.notes = res.data
-        this.$emit('update:value',this.notes)
-        Bus.$emit('update:value',this.notes)
+    this.getNotebooks().then(()=>{
+      this.$store.commit('setCurrentNotebook', {currentNotebookId:this.$route.query.notebookId})
+      this.getNotes({notebookId:this.currentNotebook.id})
     })
+    // Notebooks.getAll()
+    //   .then(res => {
+    //     this.notebooks = res.data
+    //     this.currentNotebook = this.notebooks.find(notebook => notebook.id == this.$route.query.notebookId)
+    //       || this.notebooks[0] || {}
+    //     return Notes.getAll({notebookId:this.currentNotebook.id})
+    //   }).then(res=>{
+    //     this.notes = res.data
+    //     this.$emit('update:value',this.notes)
+    //     Bus.$emit('update:value',this.notes)
+    // })
   },
 
   data() {
     return {
-      notebooks: [],
-      notes:[],
-      currentNotebook: {}
+
     }
+  },
+  computed:{
+    ...mapGetters(['notes','notebooks','currentNotebook'])
   },
 
   methods: {
+    ...mapActions(['getNotes','addNote','getNotebooks']),
     handleCommand(notebookId) {
       if(notebookId === 'trash'){
        return  this.$router.push({path:'/trash'})
       }
-      this.currentNotebook = this.notebooks.find(notebook => notebook.id == notebookId)
-      Notes.getAll({ notebookId })
-        .then(res => {
-          this.notes = res.data
-          this.$emit('update:value',this.notes)
-        })
+      this.$store.commit('setCurrentNotebook', {currentNotebookId:notebookId})
+      this.getNotes({notebookId:this.currentNotebook.id})
+      // this.currentNotebook = this.notebooks.find(notebook => notebook.id == notebookId)
+      // Notes.getAll({ notebookId })
+      //   .then(res => {
+      //     this.notes = res.data
+      //     this.$emit('update:value',this.notes)
+      //   })
     },
 
-    addNote() {
-      Notes.addNote({ notebookId: this.currentNotebook.id })
-        .then(res => {
-          console.log(res)
-          this.notes.unshift(res.data)
-        })
+    onAddNote() {
+      this.addNote({notebookId:this.currentNotebook.id })
+      // Notes.addNote({ notebookId: this.currentNotebook.id })
+      //   .then(res => {
+      //     console.log(res)
+      //     this.notes.unshift(res.data)
+      //   })
     }
 
   }
