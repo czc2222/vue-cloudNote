@@ -29,13 +29,15 @@
 import Notebooks from '@/apis/notebooks'
 import Notes from '@/apis/notes'
 import Bus from '@/helpers/bus'
-import {mapGetters,mapActions} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 
 export default {
   created() {
     this.getNotebooks().then(()=>{
-      this.$store.commit('setCurrentNotebook', {currentNotebookId:this.$route.query.notebookId})
-      this.getNotes({notebookId:this.currentNotebook.id})
+      this.setCurrentNotebook({currentNotebookId:this.$route.query.notebookId})
+      return this.getNotes({notebookId:this.currentNotebook.id})
+    }).then(()=>{
+      this.setCurrentNote({currentNoteId:this.$route.query.noteId})
     })
     // Notebooks.getAll()
     //   .then(res => {
@@ -60,13 +62,15 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['setCurrentNote','setCurrentNotebook']),
     ...mapActions(['getNotes','addNote','getNotebooks']),
     handleCommand(notebookId) {
       if(notebookId === 'trash'){
        return  this.$router.push({path:'/trash'})
       }
-      this.$store.commit('setCurrentNotebook', {currentNotebookId:notebookId})
-      this.getNotes({notebookId:this.currentNotebook.id})
+      this.setCurrentNotebook({currentNotebookId:notebookId})
+      // this.$store.commit('setCurrentNotebook', {currentNotebookId:notebookId})
+      this.getNotes({notebookId})
       // this.currentNotebook = this.notebooks.find(notebook => notebook.id == notebookId)
       // Notes.getAll({ notebookId })
       //   .then(res => {

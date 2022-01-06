@@ -8,7 +8,7 @@ const state ={
 const getters ={
   notebooks: state => state.notebooks || [],
   currentNotebook:state =>{
-     if(!Array.isArray(state.notebooks)) return {}
+    if(!Array.isArray(state.notebooks)) return {}
     if(!state.currentNotebookId) return  state.notebooks[0] || {}
     return  state.notebooks.find(notebook => notebook.id.toString() === state.currentNotebookId) || {}
   }
