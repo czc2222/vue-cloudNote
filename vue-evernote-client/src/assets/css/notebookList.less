@@ -1,6 +1,5 @@
 #notebook-list {
   flex: 1;
-
   .btn {
     font-size: 12px;
     color: white;
@@ -54,7 +53,9 @@
     font-weight: bold;
   }
 
-  main .book-list span {
+
+
+  main .book-list .icon-notebook,.action,.date,.count {
     font-size: 12px;
     font-weight: bold;
     color: #b3c0c8;
@@ -103,6 +104,16 @@
           display: none;
         }
       }
+    }
+    main .book-list .title {
+      display: block;
+      margin-left: 20px;
+      min-width: 50px;
+    }
+    main .book-list {
+      overflow: auto;
+      height: 80vh;
+
     }
   }
 }

@@ -10,8 +10,8 @@
           <router-link v-for="notebook in notebooks" :to="`/note?notebookId=${notebook.id}`" class="notebook" :key="notebook.id">
             <div>
               <span class="iconfont icon-notebook"></span>
-              {{ notebook.title }}
-              <span>{{ notebook.noteCounts }}</span>
+              <span class="title">{{ notebook.title }}</span>
+              <span class="count">{{ notebook.noteCounts }}</span>
               <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
               <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
               <span class="date">{{ notebook.createdAtFriendly }}</span>

@@ -41,10 +41,6 @@ export default new Router({
       component: () => import('@/components/Login.vue') //懒加载
 
     },
-    // {
-    //   path: '/notebooks',
-    //   component: NotebookList
-    // },
     {
       path: '/note',
       component: () => import('@/components/NoteDetail.vue') //懒加载

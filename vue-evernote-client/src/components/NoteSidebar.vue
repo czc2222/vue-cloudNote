@@ -4,7 +4,8 @@
     <span v-if="!currentNotebook.id" class="notebook-title">无笔记本</span>
     <el-dropdown v-if="currentNotebook.id" class="notebook-title"  @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
-        {{currentNotebook.title}} <i class="iconfont icon-down"></i>
+        {{currentNotebook.title.slice(0,8)}}
+        <i class="iconfont icon-down"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="notebook in notebooks" :command="notebook.id" :key="notebook.id">{{notebook.title}}</el-dropdown-item>

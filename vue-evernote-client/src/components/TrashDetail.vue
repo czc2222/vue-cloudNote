@@ -128,5 +128,18 @@ export default {
     }
   }
 }
-
+@media (max-width: 500px) {
+  #trash {
+    display: flex;
+    flex-direction: column;
+    .note-sidebar{
+      width: 87vw;
+      height: 25vh;
+    }
+    .note-detail{
+      width: 87vw;
+      height: 75vh;
+    }
+  }
+}
 </style>

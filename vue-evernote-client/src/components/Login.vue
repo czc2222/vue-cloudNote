@@ -164,8 +164,8 @@ export default {
 
   .main {
     flex: 1;
-
-    background: url(../assets/cloudNote.png) center center no-repeat;
+    background: #90a7f9 url(../assets/cloudNote.png) center center no-repeat;
+    background-size: 75vh;
 
   }
 
@@ -240,6 +240,20 @@ export default {
 
     .login {
       border-top: 0;
+    }
+  }
+}
+@media screen{
+  @media (max-width:500px){
+    .modal-container {
+      width: 100vw;
+      height:100vh;
+      display: flex;
+      flex-direction: column;
+      .form {
+        margin: auto;
+        border: none;
+      }
     }
   }
 }

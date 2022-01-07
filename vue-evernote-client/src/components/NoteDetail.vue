@@ -2,8 +2,10 @@
   <div id="note" class="detail">
     <NoteSidebar :value.sync="notes"/>
     <div class="note-detail">
-      <div class="note-empty" v-show="!currentNote.id">请创建笔记本后</div>
-      <div class="note-empty" v-show="!currentNote.id">选择或创建笔记</div>
+      <div class="note-empty" v-show="!currentNote.id">
+        <i id="icon" class="iconfont icon-records"></i>
+      </div>
+      <div class="note-empty" v-show="!currentNote.id">去添加笔记叭 ~</div>
       <div class="note-detail-ct" v-show="currentNote.id">
         <div class="note-bar">
           <span> 创建日期: {{currentNote.createdAtFriendly}}</span>
@@ -98,7 +100,12 @@ export default {
     },3000),
     onDeleteNote(){
       this.deleteNote({noteId:this.currentNote.id}).then(()=>{
-        this.$router.replace({path:'/note'})
+        this.setCurrentNote()
+        this.$router.replace({
+          path:'/note',
+          query:{noteId:this.currentNote.id,notebookId:this.currentNotebook.id}
+        })
+        // this.$router.replace({path:'/note'})
       })
     }
   },
@@ -118,5 +125,18 @@ export default {
   background-color: #fff;
   flex: 1;
 }
-
+@media (max-width: 500px) {
+  #note {
+    display: flex;
+    flex-direction: column;
+    .note-sidebar{
+      width: 87vw;
+      height: 25vh;
+    }
+    .note-detail{
+      width: 87vw;
+      height: 75vh;
+    }
+  }
+}
 </style>
