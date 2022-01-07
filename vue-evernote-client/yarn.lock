@@ -1559,6 +1559,11 @@
   "resolved" "https://registry.npmmirror.com/code-point-at/download/code-point-at-1.1.0.tgz"
   "version" "1.1.0"
 
+"codemirror@^5.41.0":
+  "integrity" "sha512-gWEnHKEcz1Hyz7fsQWpK7P0sPI2/kSkRX2tc7DFA6TmZuDN75x/1ejnH/Pn8adYKrLEA1V2ww6L00GudHZbSKw=="
+  "resolved" "https://registry.npmmirror.com/codemirror/download/codemirror-5.65.0.tgz"
+  "version" "5.65.0"
+
 "collection-visit@^1.0.0":
   "integrity" "sha1-S8A3PBZLwykbTTaMgpzxqApZ3KA="
   "resolved" "https://registry.npmmirror.com/collection-visit/download/collection-visit-1.0.0.tgz"
@@ -2263,6 +2268,11 @@
   "integrity" "sha1-yccHdaScPQO8LAbZpzvlUPl4+LE="
   "resolved" "https://registry.npmmirror.com/detect-node/download/detect-node-2.1.0.tgz"
   "version" "2.1.0"
+
+"diff-match-patch@^1.0.0":
+  "integrity" "sha1-q7WE1fEM0Rlt/FWqA3AVkq4/ezc="
+  "resolved" "https://registry.npmmirror.com/diff-match-patch/download/diff-match-patch-1.0.5.tgz"
+  "version" "1.0.5"
 
 "diffie-hellman@^5.0.0":
   "integrity" "sha1-QOjumPVaIUlgcUaSHGPhrl89KHU="
@@ -7165,6 +7175,14 @@
   "integrity" "sha1-eGQcSIuObKkadfUR56OzKobl3aA="
   "resolved" "https://registry.npmmirror.com/vm-browserify/download/vm-browserify-1.1.2.tgz"
   "version" "1.1.2"
+
+"vue-codemirror@^4.0.6":
+  "integrity" "sha1-t4a7gNjXYqk6q45G95qBAG8EN8Q="
+  "resolved" "https://registry.npmmirror.com/vue-codemirror/download/vue-codemirror-4.0.6.tgz"
+  "version" "4.0.6"
+  dependencies:
+    "codemirror" "^5.41.0"
+    "diff-match-patch" "^1.0.0"
 
 "vue-hot-reload-api@^2.2.0":
   "integrity" "sha1-UylVzB6yCKPZkLOp+acFdGV+CPI="

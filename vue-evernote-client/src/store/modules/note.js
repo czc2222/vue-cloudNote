@@ -34,7 +34,7 @@ const mutations ={
   }
 }
 const actions ={
-  getNotes({commit},{notebookId}){
+  getNotes({commit,state},{notebookId}){
     return Note.getAll({notebookId}).then(res=>{
       commit('setNotes',{notes:res.data})
     })

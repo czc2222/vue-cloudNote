@@ -38,9 +38,7 @@ export default {
   },
   created() {
     this.checkLogin({path: '/login'})
-
     this.getNotebooks()
-
   },
   computed:{
     ...mapGetters(['notebooks'])

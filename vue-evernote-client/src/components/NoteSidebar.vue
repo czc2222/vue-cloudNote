@@ -1,7 +1,8 @@
 <template>
   <div class="note-sidebar">
-    <span class="btn add-note" @click="onAddNote" >添加笔记</span>
-    <el-dropdown class="notebook-title"  @command="handleCommand" placement="bottom">
+    <span v-if="currentNotebook.id" class="btn add-note" @click="onAddNote" >添加笔记</span>
+    <span v-if="!currentNotebook.id" class="notebook-title">无笔记本</span>
+    <el-dropdown v-if="currentNotebook.id" class="notebook-title"  @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
         {{currentNotebook.title}} <i class="iconfont icon-down"></i>
       </span>
@@ -15,7 +16,7 @@
       <div>标题</div>
     </div>
     <ul class="notes">
-      <li v-for="note in notes">
+      <li v-for="note in notes" :key="note.id">
         <router-link :to="`/note?noteId=${note.id}&notebookId=${currentNotebook.id}`">
           <span class="date">{{note.updatedAtFriendly}}</span>
           <span class="title">{{note.title}}</span>
@@ -33,7 +34,7 @@ export default {
   created() {
     this.getNotebooks().then(()=>{
       this.setCurrentNotebook({currentNotebookId:this.$route.query.notebookId})
-      // return this.getNotes({notebookId:this.currentNotebook.id})
+
       if(this.currentNotebook.id){
         return this.getNotes({notebookId:this.currentNotebook.id})
       }
@@ -48,7 +49,6 @@ export default {
         }
       })
     })
-
   },
 
   data() {

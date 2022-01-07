@@ -33,7 +33,7 @@ const mutations ={
 }
 const actions ={
    getNotebooks({commit,state}){
-     if(state.notebooks !== null) return  Promise.resolve() //优化请求
+     // if(state.notebooks !== null) return  Promise.resolve() //优化请求
     return  Notebook.getAll().then(res=>{
        commit('setNotebooks',{notebooks:res.data})
      })

@@ -14,7 +14,6 @@
 
 <script>
   import Avatar from "./Avatar";
- import auth from "../apis/auth";
   import {mapActions} from "vuex";
   export default {
     components: {Avatar},
