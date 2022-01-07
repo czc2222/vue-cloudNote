@@ -9,7 +9,8 @@
           <span> 更新日期: {{currentNote.updatedAtFriendly}}</span>
           <span> {{statusText}}</span>
           <span class="iconfont icon-delete" @click="onDeleteNote"></span>
-          <span class="iconfont icon-fullscreen" @click="isShowPreview =!isShowPreview"></span>
+<!--          <span class="iconfont icon-fullscreen" @click="isShowPreview =!isShowPreview"></span>-->
+          <span class="iconfont" :class="isShowPreview?'icon-edit':'icon-eye'" @click="isShowPreview = !isShowPreview"></span>
         </div>
         <div class="note-title">
           <input type="text"
@@ -64,13 +65,14 @@ export default {
     ...mapMutations(['setCurrentNote']),
     ...mapActions(['updateNote','deleteNote','checkLogin']),
     onUpdateNote:_.debounce(function (){//lodash.debounce 节流
+      if(!this.currentNote.id) return
       this.updateNote({noteId:this.currentNote.id,title:this.currentNote.title,content:this.currentNote.content})
         .then(data=>{
           this.statusText = '已保存'
         }).catch(data=>{
         this.statusText = '保存出错'
       })
-    },300),
+    },3000),
     onDeleteNote(){
       this.deleteNote({noteId:this.currentNote.id}).then(()=>{
         this.$router.replace({path:'/note'})

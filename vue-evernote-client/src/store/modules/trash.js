@@ -1,6 +1,6 @@
 import Trash from "../../apis/trash";
 import {Message} from "element-ui";
-import notebook from "./notebook";
+
 
 const state ={
   trashNotes:null,
@@ -30,7 +30,7 @@ const mutations ={
   deleteTrashNote(state,payload){
     state.trashNotes = state.trashNotes.filter(trashNote => trashNote.id !== payload.trashNoteId)
   },
-  setCurTrashNote(state,payload){
+  setCurTrashNote(state,payload = {}){
     state.curTrashNoteId = payload.curTrashNoteId
   }
 }

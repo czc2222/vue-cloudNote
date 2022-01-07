@@ -17,9 +17,7 @@ export default {
 
   },
   created() {
-
-    this.checkLogin()
-
+    this.checkLogin({path: '/login'})
   },
   methods:{
      ...mapActions(['checkLogin'])

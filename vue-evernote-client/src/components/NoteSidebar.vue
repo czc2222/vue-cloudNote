@@ -33,12 +33,20 @@ export default {
   created() {
     this.getNotebooks().then(()=>{
       this.setCurrentNotebook({currentNotebookId:this.$route.query.notebookId})
+      // return this.getNotes({notebookId:this.currentNotebook.id})
       if(this.currentNotebook.id){
         return this.getNotes({notebookId:this.currentNotebook.id})
       }
 
     }).then(()=>{
       this.setCurrentNote({currentNoteId:this.$route.query.noteId})
+      this.$router.replace({
+        path:'/note',
+        query:{
+          noteId:this.currentNote.id,
+          notebookId:this.currentNotebook.id
+        }
+      })
     })
 
   },
@@ -49,7 +57,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['notes','notebooks','currentNotebook'])
+    ...mapGetters(['notes','notebooks','currentNotebook','currentNote'])
   },
 
   methods: {
@@ -61,7 +69,16 @@ export default {
       }
       this.setCurrentNotebook({currentNotebookId:notebookId})
 
-      this.getNotes({notebookId})
+      this.getNotes({notebookId}).then(()=>{
+        this.setCurrentNote()
+        this.$router.replace({
+          path:'/note',
+          query:{
+            noteId:this.currentNote.id,
+            notebookId:this.currentNotebook.id
+          }
+        })
+      })
 
     },
 

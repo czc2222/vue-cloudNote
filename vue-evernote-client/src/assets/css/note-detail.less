@@ -51,6 +51,16 @@
   .editor {
     height: ~"calc(100% - 70px)";
     position: relative;
+
+    .vue-codemirror {
+      height: ~"calc(100% - 25px)";
+
+      .CodeMirror {
+        height: 100%;
+        padding: 10px;
+      }
+    }
+
   }
   textarea, .preview {
     position: absolute;
@@ -70,4 +80,4 @@
   code {
     color: #f66;
   }
-}  
+}

@@ -9,9 +9,9 @@ const state ={
 const getters = {
   notes: state => state.notes || [],
   currentNote:state =>{
-    if(!Array.isArray(state.notes)) return {}
-    if(!state.currentNoteId) return  state.notes[0] || {}
-    return  state.notes.find(note => note.id == state.currentNoteId) || {}
+    if(!Array.isArray(state.notes)) return {title:'',content:''}
+    if(!state.currentNoteId) return  state.notes[0] || {title:'',content:''}
+    return  state.notes.find(note => note.id == state.currentNoteId) || {title:'',content:''}
   }
 }
 const mutations ={
@@ -29,7 +29,7 @@ const mutations ={
   deleteNote(state,payload){
     state.notes = state.notes.filter(note => note.id !== payload.noteId)
   },
-  setCurrentNote(state,payload){
+  setCurrentNote(state,payload ={}){
     state.currentNoteId = payload.currentNoteId
   }
 }

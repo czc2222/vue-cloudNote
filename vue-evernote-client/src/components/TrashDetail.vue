@@ -56,6 +56,10 @@ export default {
     this.getNotebooks()
     this.getTrashNote().then(()=>{
       this.setCurTrashNote({curTrashNoteId:this.$route.query.noteId})
+      this.$router.replace({
+        path:'/trash',
+        query:{noteId:this.curTrashNote.id}
+      })
     })
   },
   computed:{
@@ -69,10 +73,30 @@ export default {
     ...mapMutations(['setCurTrashNote']),
     ...mapActions(['deleteTrashNote','revertTrashNote','getTrashNote','checkLogin','getNotebooks']),
     onRevert(){
-     this.revertTrashNote({noteId:this.curTrashNote.id})
+     this.revertTrashNote({noteId:this.curTrashNote.id}).then(()=>{
+       this.setCurTrashNote()
+       this.$router.replace({
+         path:'/trash',
+         query:{noteId:this.curTrashNote.id}
+       })
+     })
     },
     onDelete(){
-      this.deleteTrashNote({noteId:this.curTrashNote.id})
+      this.$confirm('删除后将无法恢复', '确实删除？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+         return this.deleteTrashNote({noteId:this.curTrashNote.id})
+
+      }).then(()=>{
+        this.setCurTrashNote()
+        this.$router.replace({
+          path:'/trash',
+          query:{noteId:this.curTrashNote.id}
+        })
+      })
+
     },
 
   },
